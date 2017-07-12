@@ -20,16 +20,19 @@ func recvFiles(dir string, r *multipart.Reader) error {
 		return err
 	}
 	defer part.Close()
+
 	fname := part.FileName()
 	if fname == "" {
 		return nil
 	}
+
 	log.Println("recv", fname)
 	fd, err := os.Create(filepath.Join(dir, filepath.Base(fname)))
 	if err != nil {
 		return err
 	}
 	defer fd.Close()
+
 	_, err = io.Copy(fd, part)
 	return err
 }
@@ -38,11 +41,13 @@ func texHandler(w http.ResponseWriter, r *http.Request) error {
 	defer func(t time.Time) {
 		log.Println("execution time", time.Since(t))
 	}(time.Now())
+
 	dir, err := ioutil.TempDir("", "gotex")
 	if err != nil {
 		return err
 	}
 	defer os.RemoveAll(dir)
+
 	mr, err := r.MultipartReader()
 	if err != nil {
 		return err
@@ -76,6 +81,7 @@ func sendFile(fname string, w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 	defer fd.Close()
+
 	_, err = io.Copy(w, fd)
 	return err
 }
