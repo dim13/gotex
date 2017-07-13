@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func texHandler(w http.ResponseWriter, r *http.Request) error {
+func latexHandler(w http.ResponseWriter, r *http.Request) error {
 	defer func(t time.Time) {
 		log.Println("execution time", time.Since(t))
 	}(time.Now())
@@ -38,7 +38,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	case http.MethodPost:
-		if err := texHandler(w, r); err != nil {
+		if err := latexHandler(w, r); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	default:
