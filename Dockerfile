@@ -4,7 +4,7 @@ FROM golang
 RUN apt-get update
 RUN apt-get install -y texlive-latex-extra
 RUN apt-get install -y texlive-fonts-extra
-RUN apt-get install -y texlive-lang-german
+RUN apt-get install -y texlive-lang-all
 RUN apt-get install -y latexmk
 
 RUN mkdir -p /go/src/app
