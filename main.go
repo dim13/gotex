@@ -17,7 +17,7 @@ func latexHandler(w http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		return err
 	}
-	return Print(w, mr)
+	return printMultipart(w, mr)
 }
 
 func indexHandler(fname string, w http.ResponseWriter, r *http.Request) error {
