@@ -20,8 +20,8 @@ func latexHandler(w http.ResponseWriter, r *http.Request) error {
 	return printMultipart(w, mr)
 }
 
-func indexHandler(fname string, w http.ResponseWriter, r *http.Request) error {
-	fd, err := os.Open(fname)
+func indexHandler(w http.ResponseWriter, r *http.Request) error {
+	fd, err := os.Open("index.html")
 	if err != nil {
 		return err
 	}
@@ -34,12 +34,14 @@ func indexHandler(fname string, w http.ResponseWriter, r *http.Request) error {
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
-		if err := indexHandler("index.html", w, r); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+		if err := indexHandler(w, r); err != nil {
+			code := http.StatusInternalServerError
+			http.Error(w, err.Error(), code)
 		}
 	case http.MethodPost:
 		if err := latexHandler(w, r); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			code := http.StatusInternalServerError
+			http.Error(w, err.Error(), code)
 		}
 	default:
 		code := http.StatusMethodNotAllowed
@@ -49,5 +51,5 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", rootHandler)
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

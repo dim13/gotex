@@ -1,19 +1,16 @@
-FROM golang
+FROM golang:latest
+MAINTAINER Dimitri Sokolyuk <demon@dim13.org>
 
-#RUN apt-get update && apt-get install -y texlive-full latexmk
-RUN apt-get update
-RUN apt-get install -y texlive-latex-extra
-RUN apt-get install -y texlive-fonts-extra
-RUN apt-get install -y texlive-lang-all
-RUN apt-get install -y latexmk
+RUN apt-get update && apt-get install -y \
+	texlive-latex-extra \
+	texlive-fonts-extra \
+	texlive-lang-all \
+	latexmk
 
-RUN mkdir -p /go/src/app
-WORKDIR /go/src/app
+COPY . src/github.com/dim13/gotex
+RUN go install -v github.com/dim13/gotex
 
-CMD ["go-wrapper", "run"]
-
-COPY . /go/src/app
-RUN go-wrapper download
-RUN go-wrapper install
+WORKDIR src/github.com/dim13/gotex
+CMD exec gotex
 
 EXPOSE 8080
