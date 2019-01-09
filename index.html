@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Upload form</title>
+		<title>GoTeX</title>
 	</head>
 	<body>
-		<form method="POST" enctype="multipart/form-data">
-			<input type="file" name="upload" multiple>
-			<input type="submit" value="Upload">
+		<form method="post" enctype="multipart/form-data">
+			<div>
+				<input type="file" name="upload" multiple>
+			</div>
+			<div>
+				<input type="reset" value="Cancel">
+				<input type="submit" value="Ok">
+			</div>
 		</form>
 	</body>
 </html>

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"io"
 	"log"
 	"net/http"
@@ -31,21 +32,25 @@ func indexHandler(w http.ResponseWriter, r *http.Request) error {
 	return err
 }
 
+func errHandler(w http.ResponseWriter, err error, code int) {
+	if err == nil {
+		err = errors.New(http.StatusText(code))
+	}
+	http.Error(w, err.Error(), code)
+}
+
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		if err := indexHandler(w, r); err != nil {
-			code := http.StatusInternalServerError
-			http.Error(w, err.Error(), code)
+			errHandler(w, err, http.StatusInternalServerError)
 		}
 	case http.MethodPost:
 		if err := latexHandler(w, r); err != nil {
-			code := http.StatusInternalServerError
-			http.Error(w, err.Error(), code)
+			errHandler(w, err, http.StatusInternalServerError)
 		}
 	default:
-		code := http.StatusMethodNotAllowed
-		http.Error(w, http.StatusText(code), code)
+		errHandler(w, nil, http.StatusMethodNotAllowed)
 	}
 }
 

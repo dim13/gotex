@@ -67,7 +67,7 @@ func saveAllParts(r *multipart.Reader, dir string) error {
 
 func printMultipart(w io.Writer, r *multipart.Reader) error {
 	// create temporary working directory
-	dir, err := ioutil.TempDir("", "latex")
+	dir, err := ioutil.TempDir("", "gotex")
 	if err != nil {
 		return err
 	}
