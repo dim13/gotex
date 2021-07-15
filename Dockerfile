@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 	latexmk
 
 COPY . src/github.com/dim13/gotex
-RUN go install -v github.com/dim13/gotex
+RUN go install -v github.com/dim13/gotex@latest
 
 WORKDIR src/github.com/dim13/gotex
 CMD exec gotex
