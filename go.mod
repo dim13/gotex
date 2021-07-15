@@ -1,3 +1,3 @@
 module github.com/dim13/gotex
 
-go 1.14
+go 1.16

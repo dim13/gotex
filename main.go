@@ -1,11 +1,10 @@
 package main
 
 import (
+	_ "embed"
 	"errors"
-	"io"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
@@ -21,14 +20,11 @@ func latexHandler(w http.ResponseWriter, r *http.Request) error {
 	return printMultipart(w, mr)
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) error {
-	fd, err := os.Open("index.html")
-	if err != nil {
-		return err
-	}
-	defer fd.Close()
+//go:embed index.html
+var index []byte
 
-	_, err = io.Copy(w, fd)
+func indexHandler(w http.ResponseWriter, r *http.Request) error {
+	_, err := w.Write(index)
 	return err
 }
 
