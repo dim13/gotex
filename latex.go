@@ -12,7 +12,7 @@ import (
 
 func execute(w io.Writer, dir string) error {
 	out := new(bytes.Buffer)
-	cmd := exec.Command("latexmk", "-xelatex", "-pdf", "-interaction=nonstopmode", "-jobname=out")
+	cmd := exec.Command("latexmk", "-xelatex", "-interaction=nonstopmode", "-jobname=out")
 	cmd.Dir = dir
 	cmd.Stdout = out
 	cmd.Stderr = out
