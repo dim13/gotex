@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y \
 	texlive-latex-extra \
 	texlive-fonts-extra \
 	texlive-lang-all \
-	texlive-xetex \
+	texlive \
 	latexmk
 
 COPY . src/github.com/dim13/gotex
